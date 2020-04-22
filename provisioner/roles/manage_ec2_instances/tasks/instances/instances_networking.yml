@@ -21,6 +21,7 @@
     count_tag:
       Workshop_rtr1: "{{ec2_name_prefix}}-rtr1"
     wait: "{{ ec2_wait }}"
+    wait_timeout: "{{ ec2_wait_timeout | default(300) }}"
     vpc_subnet_id: "{{ ec2_vpc_subnet_id }}"
     volumes: "{{ec2_info[rtr1_type].volume | default(omit)}}"
   register: rtr1_output
@@ -65,6 +66,7 @@
     count_tag:
       Workshop_rtr2: "{{ec2_name_prefix}}-rtr2"
     wait: "{{ ec2_wait }}"
+    wait_timeout: "{{ ec2_wait_timeout | default(300) }}"
     vpc_subnet_id: "{{ ec2_vpc_subnet_id2 }}"
     volumes: "{{ec2_info[rtr2_type].volume | default(omit)}}"
   register: rtr2_output
@@ -109,6 +111,7 @@
     count_tag:
       Workshop_rtr3: "{{ec2_name_prefix}}-rtr3"
     wait: "{{ ec2_wait }}"
+    wait_timeout: "{{ ec2_wait_timeout | default(300) }}"
     vpc_subnet_id: "{{ ec2_vpc_subnet_id }}"
     volumes: "{{ec2_info[rtr3_type].volume | default(omit)}}"
   register: rtr3_output
@@ -153,6 +156,7 @@
     count_tag:
       Workshop_rtr4: "{{ec2_name_prefix}}-rtr4"
     wait: "{{ ec2_wait }}"
+    wait_timeout: "{{ ec2_wait_timeout | default(300) }}"
     vpc_subnet_id: "{{ ec2_vpc_subnet_id2 }}"
     volumes: "{{ec2_info[rtr4_type].volume | default(omit)}}"
   register: rtr4_output
