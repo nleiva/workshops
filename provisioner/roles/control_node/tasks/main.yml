@@ -64,7 +64,7 @@
     group: "{{item}}"
     mode: 0700
   loop:
-    - "{{ansible_user}}"
+    #- "{{ansible_user}}"
     - "{{username}}"
 
 - name: Put ssh-key in proper spot for student
@@ -75,7 +75,7 @@
     group: "{{ item }}"
     mode: 0400
   loop:
-    - "{{ansible_user}}"
+    #- "{{ansible_user}}"
     - "{{username}}"
 
 - name: clean out /tmp/workshops
