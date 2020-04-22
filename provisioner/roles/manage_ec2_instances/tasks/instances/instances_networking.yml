@@ -167,6 +167,9 @@
       ansible_network_os: "{{ec2_info[rtr4_type].os}}"
       username: "{{ec2_info[rtr1_type].username}}"
       launch_time: "{{item.1.launch_time}}"
+      Contact: nleiva@redhat.com
+      AlwaysUp: "NO"
+      DeleteBy: "{{ delete_by }}"
   with_indexed_items:
     - "{{ rtr4_output.instances }}"
   when: rtr4_output.instance_ids is not none
