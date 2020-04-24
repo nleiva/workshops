@@ -427,18 +427,18 @@
     ec2_vpc_subnet2_id: "{{ create_subnet2.subnet.id }}"
   when: (ec2_vpc_id is undefined) and (workshop_type == 'security')
 
-- name: Create ssh key pair for workshop {{ ec2_name_prefix }}
-  ec2_key:
-    name: "{{ ec2_name_prefix }}-key"
-    region: "{{ ec2_region }}"
-  register: create_key
+# - name: Create ssh key pair for workshop {{ ec2_name_prefix }}
+#   ec2_key:
+#     name: "{{ ec2_name_prefix }}-key"
+#     region: "{{ ec2_region }}"
+#   register: create_key
 
-- name: save private key
+- name: Copy manually provided Key
   copy:
-    content: "{{ create_key.key.private_key }}"
+    content: "{{playbook_dir}}/{{ec2_name_prefix}}-key.pem"
     dest: "{{ playbook_dir }}/{{ec2_name_prefix}}/{{ec2_name_prefix}}-private.pem"
     mode: '0400'
-  when: create_key.changed
+  #when: create_key.changed
 
 - name: debugging all variables for ec2 instance creation VPC-1
   debug:
