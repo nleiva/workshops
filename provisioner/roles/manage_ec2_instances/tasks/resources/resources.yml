@@ -433,37 +433,15 @@
 #     region: "{{ ec2_region }}"
 #   register: create_key
 
-- name: debugging SSH PRIVATE KEY
-  debug:
-    msg:
-      - "KEY:  {{ the_key }}"
-  # vars:
-  #   the_key: "{{playbook_dir}}/{{ec2_name_prefix}}-key.pem"
-
+# This is a hack to always use the same Key-Pair, which we provide as an extra variable
 - name: Copy manually provided Key
   copy:
+    #content: "{{ create_key.key.private_key }}"
     content: "{{ the_key }}"
     dest: "{{ playbook_dir }}/{{ec2_name_prefix}}/{{ec2_name_prefix}}-private.pem"
     mode: '0400'
-
+  no_log: True
   #when: create_key.changed
-
-# - name: Create ssh key pair for workshop {{ ec2_name_prefix }}
-#   ec2_key:
-#     name: "{{ ec2_name_prefix }}-key"
-#     region: "{{ ec2_region }}"
-#   register: create_key
-
-# - name: save private key
-#   copy:
-#     content: "{{ create_key.key.private_key }}"
-#     dest: "{{ playbook_dir }}/{{ec2_name_prefix}}/{{ec2_name_prefix}}-private.pem"
-#     mode: '0400'
-
-# - name: debugging SSH PRIVATE KEY
-#   debug:
-#     msg:
-#       - "KEY:  {{ create_key.key.private_key }}"
 
 - name: debugging all variables for ec2 instance creation VPC-1
   debug:
