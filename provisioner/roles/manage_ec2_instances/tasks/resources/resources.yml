@@ -424,7 +424,7 @@
     ec2_vpc_id: "{{ create_vpc.vpc.id }}"
     ec2_security_group: "{{ ec2_name_prefix }}-insecure_all"
     ec2_vpc_subnet_id: "{{ create_subnet.subnet.id }}"
-    ec2_vpc_subnet2_id: "{{ create_subnet2.subnet.id }}"
+    # ec2_vpc_subnet2_id: "{{ create_subnet2.subnet.id }}"
   when: (ec2_vpc_id is undefined) and (workshop_type == 'security')
 
 # - name: Create ssh key pair for workshop {{ ec2_name_prefix }}
@@ -433,31 +433,37 @@
 #     region: "{{ ec2_region }}"
 #   register: create_key
 
-# - name: Copy manually provided Key
-#   copy:
-#     content: "{{ the_key }}"
-#     dest: "{{ playbook_dir }}/{{ec2_name_prefix}}/{{ec2_name_prefix}}-private.pem"
-#     mode: '0400'
-#   vars:
-#     the_key: "{{playbook_dir}}/{{ec2_name_prefix}}-key.pem"
-  #when: create_key.changed
-
-- name: Create ssh key pair for workshop {{ ec2_name_prefix }}
-  ec2_key:
-    name: "{{ ec2_name_prefix }}-key"
-    region: "{{ ec2_region }}"
-  register: create_key
-
-- name: save private key
-  copy:
-    content: "{{ create_key.key.private_key }}"
-    dest: "{{ playbook_dir }}/{{ec2_name_prefix}}/{{ec2_name_prefix}}-private.pem"
-    mode: '0400'
-
 - name: debugging SSH PRIVATE KEY
   debug:
     msg:
-      - "KEY:  {{ create_key.key.private_key }}"
+      - "KEY:  {{ the_key }}"
+  vars:
+    the_key: "{{playbook_dir}}/{{ec2_name_prefix}}-key.pem"
+
+- name: Copy manually provided Key
+  copy:
+    content: "{{ the_key }}"
+    dest: "{{ playbook_dir }}/{{ec2_name_prefix}}/{{ec2_name_prefix}}-private.pem"
+    mode: '0400'
+
+  #when: create_key.changed
+
+# - name: Create ssh key pair for workshop {{ ec2_name_prefix }}
+#   ec2_key:
+#     name: "{{ ec2_name_prefix }}-key"
+#     region: "{{ ec2_region }}"
+#   register: create_key
+
+# - name: save private key
+#   copy:
+#     content: "{{ create_key.key.private_key }}"
+#     dest: "{{ playbook_dir }}/{{ec2_name_prefix}}/{{ec2_name_prefix}}-private.pem"
+#     mode: '0400'
+
+# - name: debugging SSH PRIVATE KEY
+#   debug:
+#     msg:
+#       - "KEY:  {{ create_key.key.private_key }}"
 
 - name: debugging all variables for ec2 instance creation VPC-1
   debug:
