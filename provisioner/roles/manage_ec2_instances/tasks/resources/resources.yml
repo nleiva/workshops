@@ -437,8 +437,8 @@
   debug:
     msg:
       - "KEY:  {{ the_key }}"
-  vars:
-    the_key: "{{playbook_dir}}/{{ec2_name_prefix}}-key.pem"
+  # vars:
+  #   the_key: "{{playbook_dir}}/{{ec2_name_prefix}}-key.pem"
 
 - name: Copy manually provided Key
   copy:
