@@ -1,4 +1,17 @@
 ---
+### Wait for Tower to be responsive
+- name: Wait for Tower to be responsive
+  uri:
+    url: https://localhost/api/v2/ping/
+    method: GET
+    user: admin
+    password: "{{admin_password}}"
+    validate_certs: false
+    force_basic_auth: true
+  register: test_ping
+  until: test_ping is not failed
+  retries: 10
+
 #### INVENTORY
 - name: create workshop inventory
   tower_inventory:
