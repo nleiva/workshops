@@ -303,15 +303,15 @@
         - vpc_net_facts2.vpcs|length > 0
         - item.associations == []
 
-    - name: set keys for instance creation dynamically since key was not supplied by user
-      set_fact:
-        ec2_key_name: "{{ ec2_name_prefix }}-key"
+    # - name: set keys for instance creation dynamically since key was not supplied by user
+    #   set_fact:
+    #     ec2_key_name: "{{ ec2_name_prefix }}-key"
 
-    - name: delete ssh key pair for workshop {{ ec2_name_prefix }}
-      ec2_key:
-        name: "{{ec2_key_name}}"
-        region: "{{ ec2_region }}"
-        state: absent
+    # - name: delete ssh key pair for workshop {{ ec2_name_prefix }}
+    #   ec2_key:
+    #     name: "{{ec2_key_name}}"
+    #     region: "{{ ec2_region }}"
+    #     state: absent
 
     - name: delete AWS VPC {{ ec2_name_prefix }}
       ec2_vpc_net:
